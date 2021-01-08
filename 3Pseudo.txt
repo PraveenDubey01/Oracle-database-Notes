@@ -1,0 +1,317 @@
+Sequence:
+SELECT Deptno,PNR.CURRVAL FROM Emp ORDER BY deptno;  invalid
+SELECT Deptno,PNR.CURRVAL FROM Emp;  valid
+SELECT DISTINCT Deptno,PNR.CURRVAL FROM Emp; invalid
+
+SELECT *FROM Emp WHERE pnr.CURRVAL=10;  invalid
+
+Practice:
+CREATE SEQUENCE s1
+INCREMENT BY 10;
+//Default initial value is 1
+
+
+CREATE SEQUENCE s2
+INCREMENT BY -1;
+//Default initial value -1
+
+CREATE SEQUENCE S3
+INCREMENT BY 10
+START WITH 100;
+
+
+Note: If common difference(INCREMENT BY) is -ve number then START WITH value cant be positive or zero, start with should be negative
+Ex: INVALID
+ CREATE SEQUENCE S4
+ INCREMENT BY -10
+ START WITH 100;
+
+Note: If common difference is +ve number than START WITH value is also positive.
+Ex: INVALID
+CREATE SEQUENCE S4
+INCREMENT BY 1
+START WITH -10
+
+Ex:
+CREATE SEQUENCE  s1
+INCREMENT BY 10
+START WITH 10
+MINVALUE 10
+
+Ex:
+CREATE SEQUENCE  s3
+INCREMENT BY 1
+START WITH 3 
+MINVALUE 1
+MAXVALUE 5
+CYCLE
+NOCACHE
+ 
+Ex: INVALID
+CREATE SEQUENCE  s5
+INCREMENT BY 1
+START WITH 3 
+MINVALUE 5
+
+> START WITH Value should be greater than or equals to MINVAL.
+
+Ex: MINVAL should be less than MAXVAL.
+CREATE SEQUENCE  s5
+INCREMENT BY 1
+START WITH 5 
+MINVALUE 5
+MAXVALUE 1
+
+Ex:
+CREATE SEQUENCE  s6
+INCREMENT BY 1
+MINVALUE -5
+MAXVALUE 5
+ 
+Ex: invalid
+CREATE SEQUENCE  s6
+INCREMENT BY 1
+MINVALUE -5
+MAXVALUE -10
+ 
+Ex:
+CREATE SEQUENCE  S2
+INCREMENT BY 1
+NOMINVALUE
+NOMAXVALUE
+NOCYCLE
+NOCACHE
+
+Q: create a sequence making difference by 2 in b/w a range of 50 to 100, this sequence should starts from 50.
+
+
+CREATE SEQUENCE Sn
+INCREMENT BY 2
+START WITH   50
+MINVAL       50
+MAXVAL       100
+CYCLE 
+
+Deptid(10 to 100) --common dif 10
+
+DEPT: deptno,dname,loc
+CREATE SEQUENCE DeptSeq
+INCREMENT BY 10
+START WITH   10
+MAXVAL       100
+NOCYCLE
+
+
+============================================================
+CREATE SEQUENCE Student_enroll_Seq;
+SQL> CREATE TABLE Student
+  2  (
+  3    Enroll NUMBER(2) PRIMARY KEY,
+  4    Sname VARCHAR(10)
+  5  );
+
+INSERT INTO Student VALUES(Student_enroll_Seq.CURRVAL,'MOHIT');
+INSERT INTO Student VALUES(Student_enroll_Seq.NEXTVAL,'MOHIT');
+ 
+UPDATE Student SET enroll=enroll+Student_Enroll_Seq.CURRVAL;
+
+  1  CREATE TABLE Sample01
+  2  (
+  3    sid NUMBER(5) PRIMARY KEY,
+  4    Sname VARCHAR2(10) DEFAULT  'GUEST'
+  5* )
+
+CREATE TABLE Sample02
+(
+  sid NUMBER(5) DEFAULT Sample02_Seq.NEXTVAL,
+  sname VARCHAR(10) DEFAULT 'NA'
+)
+
+....................
+  Deptno NUMBER(2) CHECK(Deptno IN(10,20,30,Dept_Seq.CURRVAL))
+
+SELECT Seq1.NEXTVAL,Seq1.NEXTVAL,Seq1.NEXTVAL FROM Dual;
+
+Ex: Seq1
+    50  
+    Range(10 to 100)
+    Diff: 10
+    Cycle
+
+CREATE SEQUENCE Seq1
+INCREMENT BY 10
+START WITH 50
+MAXVALUE 100
+MINVALUE 10
+CYCLE
+NOCACHE  
+/
+
+Invalid Seq:
+CREATE SEQUENCE Seq1
+INCREMENT BY 1
+START WITH 
+MAXVALUE 5
+MINVALUE 1
+CYCLE
+NOCACHE 
+
+
+Invalid:
+ALTER SEQUENCE SEQ2
+START WITH 5
+
+
+> Give me the details of top 3 highest payment in the organization 
+SELECT LEVEL,MAX(sal)
+FROM Emp
+WHERE LEVEL<=3
+CONNECT BY PRIOR sal > sal 
+GROUP BY LEVEL
+ORDER BY LEVEL
+/
+
+
+> Give me the details of top 2 highest payment in the department 30
+
+> Remove all duplicates
+
+> Give me the details top 3 lowest payement.
+SELECT LEVEL,MIN(sal)
+FROM Emp
+WHERE LEVEL<=3
+CONNECT BY PRIOR sal < sal 
+GROUP BY LEVEL
+ 
+> Give me the details of top three highest paid employees.
+
+> Display information of first three highest paid employee.
+ SELECT ROWNUM,ename,sal
+FROM (SELECT ename,sal FROM Emp ORDER BY sal DESC) e
+WHERE ROWNUM<=3
+/
+
+> Give the information of first three highest payment.
+
+SELECT ROWNUM,Sal
+FROM (SELECT DISTINCT Sal FROM Emp ORDER BY sal DESC)
+WHERE ROWNUM<=3
+
+> Give the information of first three lowest payment 
+SELECT ROWNUM,Sal
+FROM (SELECT DISTINCT Sal FROM Emp ORDER BY sal ASC)
+WHERE ROWNUM<=3
+
+
+> Give me the details of first three lowest paid employee.
+ 
+> Give me the details of first three highest payment of the department 30.
+ SELECT ROWNUM,sal
+FROM (SELECT DISTINCT sal FROM Emp WHERE deptno=30 ORDER BY Sal DESC) e
+WHERE ROWNUM<=3
+ 
+
+> Give me the details of third highest payment of the department 30.
+SELECT *
+FROM 
+(SELECT ROWNUM count,sal
+FROM (SELECT DISTINCT sal FROM Emp WHERE deptno=30 ORDER BY Sal DESC) e1) e2
+WHERE e2.count BETWEEN 2 AND 4
+
+ROWID:
+     DELETE FROM Sample
+     WHERE
+     ROWID NOT IN(SELECT MIN(ROWID) FROM Sample GROUP BY Empno,Ename,Sal);
+
+Set Operations:
+Ex1: Invalid
+SELECT Ename FROM Emp
+UNION
+SELECT Sal FROM Emp;
+
+Ex2: Invalid
+SELECT Ename,Sal FROM Emp
+UNION
+SELECT Sal,Ename FROM Emp
+ 
+Ex3: Invalid
+SELECT Ename,Sal FROM Emp
+UNION
+SELECT Ename FROM Emp
+
+
+Ex4:
+SELECT Sal Total FROM Emp
+UNION ALL
+SELECT SUM(Sal) Total FROM Emp 
+ 
+SELECT Ename,Sal Total FROM Emp
+UNION ALL
+SELECT null,SUM(Sal) Total FROM Emp 
+
+SELECT Ename,Sal Total FROM Emp
+UNION ALL
+SELECT 'Total',SUM(Sal) Total FROM Emp 
+ 
+Ex:
+SELECT Deptno,Ename,Sal FROM Emp WHERE Deptno=10
+UNION ALL
+SELECT null,'Total',SUM(Sal) FROM Emp WHERE deptno=10
+UNION ALL
+SELECT Deptno,Ename,Sal FROM Emp WHERE Deptno=20
+UNION ALL
+SELECT null,'Total',SUM(Sal) FROM Emp WHERE deptno=20
+UNION ALL
+SELECT Deptno,Ename,Sal FROM Emp WHERE Deptno=30
+UNION ALL
+SELECT null,'Total',SUM(Sal) FROM Emp WHERE deptno=30
+
+Practice:
+> Give me the income details of all employees along with total sum of the organization (vertically)
+
+> Give me the income details of all employees along with the departement wise sum of the payment.
+
+> Give me the employee name details of the department 10, only displaying those names who doesnt found in departement 20 and 30
+
+SELECT Ename FROM Emp WHERE Deptno=10
+MINUS
+SELECT Ename FROM Emp WHERE Deptno IN(30,20);
+
+> Give me the unique employee name of the department 10 whose doesnt found in the other department
+
+SELECT Ename FROM Emp WHERE Deptno=10
+MINUS
+SELECT Ename FROM Emp WHERE Deptno!=10;
+
+Q: Dispaly unique designation of departement 10.
+   SELECT Job FROM Emp WHERE Deptno=10
+   MINUS
+   SELECT Job FROM Emp WHERE Deptno!=10
+ 
+Q: Dispaly unique designation of departement 30.
+Q: Dispaly unique designation of departement 20.
+
+Q: Display common designation details of each departement.
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+

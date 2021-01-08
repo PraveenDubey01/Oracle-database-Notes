@@ -1,0 +1,53 @@
+> Give the deptname and location information of each employees.
+
+> In which location TURNER is working.
+
+> Give the manager details of all employees.
+
+> Show me the grade information of all employees.
+
+> Give the department name and grade information of each employees.
+
+> Give the department name and grade information of those employees who is working in bostan.
+
+> Give the employee and their supervisor details along with their resepected department name and grade information of employee as well as supervisor.
+
+> Give the minimum payment details of the organization along with respected employees name.
+
+> Give me name of the employee who gates highest payment in the org.
+
+> Give me all junior details of the FORD.
+
+> Give me information of those employees whose salary more than of MILLER.
+
+> Give me details of those employees whose designation is same as their supervisor.
+
+> Give me the details of those employees whose working in same department in which their supervisor/manager is working.
+
+> Give me the details of those employees whose working in different department in which their supervisor/manager is working.
+
+> Give me the information of those employees who joined the organization in same date of their manager.
+
+> Give me the information of those employees whose salary is more than their manager.
+
+> Give the information of those employees who will gets highest payment in their department.
+
+> Give  the information of those emp whose experience is more(highest) in their job type.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

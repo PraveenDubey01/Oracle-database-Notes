@@ -1,0 +1,2154 @@
+What is SQL? 
+> SQL stands for structure query language.
+> SQL is aN industry standards which is compatible with RDBMS based database software.
+
+Types of SQL statements
+1. DDL(Data Definition Language)-extension(metadata)
+   > CREATE (Table,View,Index,Sequence,Proc...)-DB object
+   > DROP -TABLE
+   > RENAME
+   > TRUNCATE 
+   > ALTER
+DATA    : DML
+METADATA: DDL
+
+2. DML(Data Manipulation Language) - intension
+   > INSERT
+   > DELETE
+   > UPDATE
+
+3. DCL(Data Control Language)
+   > GRANT
+   > REVOKE
+
+4. TCL(Transaction Control Language)
+   > COMMIT
+   > ROLLBACK 
+   > SAVEPOINT
+
+5. DRL(Data Read Language)
+   > SELECT (70%)
+
+----------------------------------------------------------
+Q: Give me the details of the whole departments.
+way1:
+   SELECT *
+   FROM   Dept;
+way2:
+   SELECT * FROM   Dept;
+   select * from dept;
+way3:
+   SELECT deptno,dname,loc 
+   FROM   Dept
+way4:
+   SELECT dname,loc,deptno
+   FROM   Dept
+
+Q2: Give me the name and location information of department 10.
+
+SELECT dname,loc
+FROM   dept
+WHERE Deptno = 10;
+Working of CREATE statement:
+How to create a table?
+CREATE TABLE Student
+(
+  sno NUMBER(2),
+  sname VARCHAR2(10),
+  fee NUMBER(5)
+);
+
+SELECT * FROM   Student;
+
+How to insert data?
+case1:
+> INSERT INTO Tablename VALUES(Val1,Val2,...ValN);
+
+> INSERT INTO Tablename(Col1,Col2,...colN)  
+  VALUES(Val1,Val2,...ValN);
+
+
+NUMBER :  'value' or value
+VARCHAR2/DATE: 'value'
+
+> By default oracle server will provides three tables for user practice.
+  a. Emp(empno,ename,job,mgr,sal,comm,hiredate,deptno)
+  b. Dept (deptno,dname,loc)
+  c. SalGrade(grade,LoSal,HiSal)
+  d. Dual (usefull)
+
+> Create Emp table with required columns
+  Emp(empno,ename,job,mgr,sal,comm,hiredate,deptno)
+  CREATE TABLE Emp
+  (
+    empno NUMBER(4),
+    ename VARCHAR2(10),
+    job   VARCHAR2(10),
+    mgr   NUMBER(4),
+    sal   NUMBER(4),
+    comm  NUMBER(4),
+    hiredate DATE,
+    deptno NUMBER(2)
+  );
+CREATE TABLE Dept
+(
+  deptno NUMBER(2),
+  dname  VARCHAR2(12),
+  loc    VARCHAR2(10)
+);
+
+> DESC Tablename;
+> Desc Emp;
+> Desc Dept;
+
+Insert:
+INSERT INTO emp VALUES ('7369','SMITH','CLERK','7902','1980-12-17','800.00',NULL,'20');
+INSERT INTO emp VALUES ('7499','ALLEN','SALESMAN','7698','1981-02-20','1600.00','300.00','30');
+INSERT INTO emp VALUES ('7521','WARD','SALESMAN','7698','1981-02-22','1250.00','500.00','30');
+
+INSERT INTO emp VALUES ('7566','JONES','MANAGER','7839','1981-04-02','2975.00',NULL,'20');
+
+INSERT INTO emp VALUES ('7654','MARTIN','SALESMAN','7698','1981-09-28','1250.00','1400.00','30');
+
+INSERT INTO emp VALUES ('7698','BLAKE','MANAGER','7839','1981-05-01','2850.00',NULL,'30');
+
+Working with SELECT Statement:
+> By using select statement we can retreive data from database table
+
+SELECT  col1,col2....
+FROM    Tablename
+WHERE   condition
+
+> SELECT statement identifying number of selected columns.
+
+> FROM clause identifying data comes from which table.
+
+> WHERE clause identifying number of selected row.
+
+Practice:
+> Give the details of all departments?
+  SELECT * FROM Dept;
+> Give the department name details of organization.
+  SELECT Dname
+  FROM   Dept
+
+> Give me the location details of each department of the orgnaization
+  SELECT Loc
+  FROM   Dept;
+> Give me the details of those departments which is located  in new york
+  SELECT *
+  FROM Dept
+  WHERE Loc = 'NEW YORK'
+
+Operator: > >= < <= = !=  AND OR
+
+> Give me the details of departemnt 10
+  SELECT *
+  FROM Dept
+  WHERE Deptno = 10
+
+
+> Give me the details of those departments which is either located in Dallas or department name is sales.
+  SELECT *
+  FROM Dept
+  WHERE Loc='DALLAS' OR Dname='SALES'
+
+
+> Give me the details of all departments excepting department 30.
+  WHERE Deptno!=30;
+
+> Give me department name information of 10 and 30th department.
+  where deptno=10 OR deptno=30
+> Give me the details of sales department which is located in new york.
+
+  SELECT *
+  FROM Dept
+  WHERE   Dname = 'SALES' AND Loc = 'NEW YORK'
+> Give me the employee details of the org.
+  SELECT *FROM Emp;
+
+> Give me the income details of King.
+  SELECT Ename,Sal
+  FROM Emp
+  WHERE Ename = 'KING';
+
+> Give me the designation information of all employee along with their name.
+  SELECT Ename,Job
+  FROM Emp
+
+
+> Give me the department details(id) of all employees.
+
+> Give me the designation of all employees who is working for department 10.
+  SELECT Ename,Job
+  FROM Emp
+  WHERE Deptno = 10;
+
+> Give me name details of all employees of 10th department
+> Give me name details of all employees of 20th department
+> Give me name details of all employees of 30th department
+
+Assignment:
+> Give me the details of manager.
+  SELECT empno,ename,sal,job
+  FROM Emp
+  WHERE Job='MANAGER';
+
+> Give me the details of those employees who joined the organization 17-DEC-81.
+  SELECT Ename,Hiredate
+  FROM Emp
+  WHERE Hiredate = '17-DEC-81';
+
+> Give me the details of those employee WHOSE income is 3000.
+  WHERE sal = 3000;
+> Give me the details of thsoe employees whose monthly income is 1500 or more.
+  WHERE Sal=1500 OR Sal>1500;
+  WHERE Sal>=1500;
+
+
+
+> Give me the details of clerks.
+  WHERE Job = 'CLERK';
+
+
+> Give me the details 20 and 30th department employees.
+  WHERE Deptno = 20 OR Deptno = 30;
+  WHERE Deptno IN(20,30);
+
+> Give me the details of those employees whose salary between 1500 and 2500 (inclusive)
+ SELECT Ename,Sal
+ FROM Emp
+ WHERE Sal>=1500 AND Sal<=2500
+ WHERE Sal BETWEEN 1500 AND 2500
+
+> Give me the details of those employee who is working for department 20 and getting the monthly income more than 1500.
+  WHERE Deptno = 20 AND  Sal>1500
+
+> Give me the details of Smith and jones.
+  WHERE ename = 'SMITH' OR ename ='JONES'
+  WHERE Ename IN('SMITH','JONES')
+
+> Calculate the 15% of the monthly income of Manager.
+
+> Calculate the monthly HRA as 18%, DA as 12% based on monthly salary of each emp. 
+
+SELECT Ename,Sal,Sal*0.18 HRA,Sal*0.12 DA
+FROM  Emp;
+
+> Give me the yearly income details of all employees.
+  SELECT Ename,Sal,Sal*12 Yearly FROM Emp;
+
+
+> Give me the yearly income details of all employees who is working for department 30.
+  SELECT Ename,Sal,Sal*12 Yearly FROM Emp WHERE Deptno=30;
+
+
+> Give me the half yearly income details of the manager.
+
+> Give me the quarterly income details of the salesman.
+  sal*3
+
+> Give me the anual income details of all employees after providing monthly bonus 500. 
+  SELECT Ename,Sal,(Sal+500)*12 Anual FROM Emp
+
+
+> Give me the anual income details of all employees after providing yearly bonus 2000.
+  Sal*12 + 2000
+
+> Give me the anual income details of all employees after providing monthly hra 15% and da 12% and pf 8% of the monthly salary.
+  
+total: 
+
+SELECT Ename,Sal,(sal + Sal*0.15 + Sal*0.12 + Sal*0.08)*12 Anual
+FROM Emp
+
+
+> Give me the anual income details of all employees after providing yearly hra 15% and da 12% and pf 8% of the monthly salary.
+
+> Give me the monthly earning details of all employee
+  SELECT Ename,Sal,Comm,Sal + Comm Monthly FROM Emp;
+
+  Comm IS NULL   => comm=null
+  null is null   => true
+  comm IS NOT NULL =>  Comm!=null
+
+> Give me the details of those employees who doesnt get any commission.
+  WHERE Comm = 0
+
+> Give me the details of those employees who have commission.
+  WHERE Comm != 0;
+        
+
+> Give me the details of those employees whose commission details is not available.
+   WHERE comm IS NULL;
+
+> Give me the details of those employees whose commission details are available.
+  WHERE comm IS NOT NULL;
+
+  NVL(expr1,expr2)  => (expr1 IS NOT NULL) ?expr1:expr2
+  NVL(Columname,'Not Available');
+ 
+  NVL(ename,'Not Available')
+  NVL(ename,0) --Wrong: error
+  NVL(comm,0)  valid
+  NVL(Comm,'Not Available')  -INVALID
+> Give me the details of those employees who is controlled by other employee.
+   WHERE Mgr IS NOT NULL
+
+> Give me the details of those employee who doesnt controlled by any one.
+   WHERE mgr IS NULL
+
+How to create a table?
+syntax:
+  CREATE TABLE Tablename
+  (
+     column1 DATATYPE(Width),
+     column2 DATATYPE(Width),
+     ........
+     columnn DATATYPE(Width)
+   );
+
+
+CHAR
+
+VARCHAR2
+
+
+  CHAR(10)      	VARCHAR2(10)	
+---------------		-----------
+  COL1  		COL2
+  ABC (10BYTES)		ABC  (3BYTES)
+  ABCDEABCDE(10BYTES)   A.........
+
+INSERT('ABC','ABC');
+
+Datatype:
+
+Character Datatype
+-------------------
+1. CHAR
+2. NCHAR
+3. VARCHAR2
+4. NVARCHAR2
+
+Date:
+   Century,Year,Month,Day,Hour,Minute,Second
+TIMESTAMP:
+   Century,Year,Month,Day,Hour,Minute,(Second/Fraction)
+
+Give me the complete monthly income details of all employee.
+  sal+comm
+
+  nvl(expr1,expr2)
+  if(expr1 is not null)
+      return expr1;
+  else 
+      return expr2;
+
+  NVL(mgr,number)
+  NVL(comm,number)
+  NVL(Desig,'Not available');
+  NVL(hiredate,SYSDATE);
+
+> Give me the employee details along with their manager name.
+Display employee information in given format:
+ a. King Works For Departement 10
+ b. King's monthly incomes is 5000
+ c. King is working as a president
+ d. King works for departement 10 with anual income 60000 working as a president and joined the oraganization 17-NOV-82
+
+
+a. SELECT Ename||' Works For Departement '||Deptno FROM Emp
+b. SELECT INITCAP(ename)||'''s monthly income is '||Sal FROM Emp
+ 
+Department Accounting Located in New
+
+> Give me department id information of working departement.
+  SELECT DISTINCT Deptno FROM Emp;
+> Give me the information of available designation type of the org.
+  SELECT DISTINCT Job FROM Emp;
+> Give me available payment type details.
+
+Where clause:
+> Give me the details of all managers
+  WHERE Job = 'MANAGER'
+  WHERE UPPER(Job) = 'MANAGER' 
+
+> Give me the details of all clerks
+  WHERE Job='CLERK'
+
+> Give me the details of 10th department employees.
+  WHERE Deptno=10
+
+> Give me the details of those person who is working for department   20.
+  WHERE Deptno=20
+
+> Give me the details of those employees who is working under the manager 7839.
+  WHERE mgr = 7839
+
+> Give me the details of those employees who joined the organization 17-nov-81.
+  WHERE hiredate = '17-NOV-81'
+
+> Give me the details of those employees whose monthly income between 2000 and 3000.
+ WHERE Sal>=2000 AND Sal<=3000
+
+> Give me the details of those of employees who joined the org before     hirdate < '15-NOV-82'
+
+> Give me the details of those of employees who joined the org after 15-NOV-82.
+
+> Give me the details of those emp who joined the org in the year of 1981.
+   hiredate>='01-JAN-1981' AND hiredate<='31-DEC-1981'
+
+> Give me the income details of jones.
+  WHERE ename='JONES'
+
+> Give me the details of all employees excepting department 10.
+  WHERE NOT Deptno=10
+
+Practice:
+> Give me manager details of department 10.
+
+> Give me the details of those clerks whose monthly income is 1100 or more.
+> Give me the clerk details of department 10.
+> Give me those manager details whose monthly income between 2000 and 2800.
+> Give me details of those employees whose working as a manager or working for department 20.
+> Give me details of those employees whose working as a clerk or monthly income is greater or equal to 1100.
+> Give me details of  department 10 and 20th employees.
+> Give me details of all employees excepting managers.
+> give me details of all employees  excepting those person whose monthly income 2000 or more.
+> Give me details of all employees excepting department 20th and 30th clerks.
+
+
+Practice:
+> Give me those clerk details of department 20 whose monthly income more than 1100.
+
+  Job='CLERK' AND  Deptno=20 AND Sal>1100
+
+> Give me the details of dept 20th employees whose montly income is more than 1100 or working as a clerk.
+   WHERE Deptno = 20 AND (sal>1100 OR job='CLERK')
+> Give me the details of those emp who is working as a manager in departement 10 or income is greater or equals to 3000.
+
+> Give me manager information of department 10 or employee of the departement 20 whose income is 3000 or more
+
+
+BETWEEN ... AND ...
+
+> Give me details of those employees whose salary b/w 1500 and 2500
+  WHERE sal>=1500 AND Sal<=2500
+
+  WHERE Sal BETWEEN 1500 AND 2500
+  WHERE Col BETWEEN min AND max
+  WHERE sal BETWEEN 2500 AND 1500  no row selected
+           
+> Give me the details of those employees who joined the org in 1981.
+  WHERE hiredate BETWEEN '01-JAN-81' AND '31-DEC-81'
+
+> Give me the details of those emp whose names between a and e.
+
+> Give me the  income and joining details of king,jones,blake,smith,ford.
+
+  WHERE ename='KING' OR Eanme='JONES' OR Ename='BLAKE' OR Ename='SMITH' OR Ename='FORD'
+
+  WHERE Ename IN('KING','JONES','BLAKE','SMITH','FORD')
+
+> Give me the  income and joining details of all employees excepting king,jones,blake,smith,ford.
+ WHERE Ename not IN('KING','JONES','BLAKE','SMITH','FORD')
+
+> Give me the details of those employees who is working in departement 10,20,30,40,50,60.
+  where deptno IN(10,20,30,40,50,60,NULL)
+
+> Give me the details of those employees whose commission is null.
+  WHERE Comm = NULL;
+  WHERE COMM IS NULL;
+  WHERE COMM IS NOT NULL;
+
+> Give me the details of those employee who doesnt controlled by any   one.
+  WHERE Mgr IS NULL;
+
+
+> Give me the details of those employee who has supervisor.
+  WHRE Mgr IS NOT NULL;
+
+Practice:
+> names start with 'S'
+> names end with 'H'
+> names containing 'A'
+> names containing 'A' atleast twice.
+> names start with 'a' and ends with 's'
+> who joined the org 15th day of the month.
+> who joined the org 1987
+> who joined the org in dec.
+> who joined the org first day of the year
+> who joined the org first day of the may.
+> whose names containing exactly five characters
+> whose names containing more than four character
+> whose names contains less then six character
+> whose designation containing 'man'
+> whose designation start with 'man'
+> whose designation ends with 'man'
+> give me the details of those person whose salary containing five digits
+> give me the details of those person whose salary containing more than four digits
+> whose salary starts with 1.
+  Col LIKE '_'
+
+
+   Sample:
+     sid	sname
+	1	AAABBB
+   	2	AAA_BC
+	3	XCDEF
+	4	HELLO_WORLD
+
+   WHERE sname LIKE '%\_%'  ESCAPE '\'   
+
+> give me the sample names start with with %
+  WHERE sname LIKE '\%%' ESCAPE '\';
+> Give me income details of all employees low to high salary.
+> Give me employee details increasing order of their payment.
+
+> Give me details of all employee based on order of there joining
+
+> Give me details of all employees based on order of departments.
+> Give me details of employees based on alphabetical order of their names.
+
+> Give me emp details according to decreasing order of  their payment.
+
+Student(sno,sname,fee)
+
+> Give me the details of allen.
+
+> Give me the details of those emp whose designation ends with 'man' without using LIKE operators.
+  
+> Give me the details of those emp whose designation starts with 'man' without using LIKE operators. 
+
+> Give me the details of those employees whose names first and last characters are same.
+
+> Give me the details of those employees whose names containing exactactly five letters.
+  WHERE LENGTH(Ename) = 5;
+
+> Give me the details of those employees whose names containing more then four letters.
+  WHERE LENGTH(Ename) > 4;
+
+> Give me the details of those employees whose salary containing exactly three digits.
+    WHERE LENGTH(Sal) = 3;
+
+> Give me the details of those person whose names containing atleast one 'A'.
+   WHERE INSTR(Ename,'A')>0
+   WHERE INSTR(Ename,'A')!=0
+   WHERE INSTR(Ename,'A')>=1
+            
+
+> Give me the details of those person whose names containing exactly one 'S'.
+  WHERE INSTR(ename,'S',1,1)>0 AND INSTR(ename,'S',1,2)=0
+
+> Give me the details of those person whose names containing more then one 'A'.
+   WHERE INSTR(ename,'S',1,2)>0
+
+> Give me the details of those person whose names containing 'A' is twice.
+ WHERE INSTR(ename,'S',1,2)>0 AND INSTR(ename,'S',1,3)=0
+
+> Give me the details of those person whose designation having 'man'.
+  WHERE INSTR(Job,'MAN',1,1)>0
+> 
+  INPUT: word1_word2
+  OUPTUT: word1
+
+
+  INPUT: word1_word2
+  OUPTUT: word2
+> word1_word2_word3_word4
+
+ 
+> Give me the emp income details in the form graphs.
+
+> Give me date and time information of current days.
+
+> Give me date of next day
+> Give me date of previous day
+
+> Give me date and time information of after 5hours.
+> Give me date and time information before 5hours.
+
+> Give me daywise experience details of all employees.
+  SELECT Ename,Hiredate,SYSDATE-Hiredate Dayswise FROM Emp;
+
+> Give me weekly experience details of all employees.
+  (SYSDATE-HIREDATE)/7
+> Give me details of those employees who has completed 100days.
+> Give me details of those employees who has completed 50weeks.
+
+> Give me details of those employees whose weekly experience is more than 100.
+
+> Give me date information after six month.
+> Give me date information before six month.
+> Give me date information after one year.
+  ADD_MONTHS(SYSDATE,12)
+> Give me date info before five years
+> Give me date of joining of each employee whenever they were completed 3 months after joining the org.
+
+> Give me monthly experience details of all employees
+  MONTHS_BETWEEN(SYSDATE,Hiredate)
+> Give me year experience details of all employees
+  MONTHS_BETWEEN(SYSDATE,Hiredate)/12
+
+> Give me hours experience details of all employees
+  (SYSDATE-HIREDATE)*24
+
+> Give me date of next coming sunday.
+> Give me date of next comming sat.
+> Give me first leave day of all employees(First comming sunday after joining the org).
+
+  NEXT_DAY(hiredate,'SUN')
+
+
+LAST_DAY():
+  Jan:  31-jan-xx
+
+> Give me the payment details of all employee in their joining month.
+> How many days worked by the employees in their joining month.
+
+> How may days are left in current month.
+  SELECT TRUNC(SYSDATE+30,'MONTH')-SYSDATE FROM DUAL
+> How many minutes are left in current day
+  SELECT (TRUNC(SYSDATE+1)-SYSDATE)*24*60 FROM Dual 
+> How many seconds are left in current day
+  SELECT (TRUNC(SYSDATE+1)-SYSDATE)*24*60*60 FROM Dual 
+>  How many Hours are left in current day
+  SELECT (TRUNC(SYSDATE+1)-SYSDATE)*24 FROM Dual 
+
+> How may days are left in current week.
+SELECT TRUNC(TRUNC(SYSDATE+7)-SYSDATE) FROM Dual;
+ 
+> How may days are left in current year. 
+  SELECT TRUNC(ROUND(ADD_MONTHS(SYSDATE,6),'YEAR')-SYSDATE)
+  FROM DUAL;
+
+ Sample01: sid,sname,sdate
+ INSERT INTO Sample01 VALUES(101,'ABC','01-JAN-20')
+ INSERT INTO Sample01 VALUES(101,'ABC','01-01-01')
+
+> In which century employees joined the org.
+  SELECT Ename,TO_CHAR(Hiredate,'CC') FROM Emp;
+
+> Give me numeric week day information of date of joining of the emp.
+  TO_CHAR(Hiredate,'D')
+> Give information of current numeric week day.
+  TO_CHAR(SYSDATE,'D')
+
+> Give me the details of numeric month day in which employees joined the org.
+
+> Give me current week day information.
+
+> Give me current year day information.
+
+> In which year day employees joined the org.
+  workingday = totalday - Completed
+> how many day completed in current year
+  TO_CHAR(SYSDATE,'DDD')
+> How many day left in current year.
+  first day of next year:
+       TRUNC(ADD_MONTHS(SYSDATE,12),'YEAR')
+       ROUND(ADD_MONTHS(SYSDATE,6),'YEAR')
+
+> How many day employee worked in their joining year.
+
+  FDAY NEXT YEAR - HIREDATE
+
+> Give me the details of current week of the month
+  TO_CHAR(SYSDATE,'W')
+> Give me the details of numeric week of the joining month of the employees
+  TO_CHAR(HireDATE,'W')
+
+> Give me the details of those employees who joined the org first week of the month.
+ 
+> Give me the details of those employees who joined the org 3rd week of the month.
+
+> Give me the details of those employees who joined the org last week of the month.
+   LAST_DAY()
+
+> Give me the details of those employees who joined the org in 1982.
+  WHERE TO_CHAR(Hiredate,'YYYY')=1982;
+> Give me the details of those employees who joined the org in 2004.
+  WHERE TO_CHAR(Hiredate,'YYYY')='2004'
+
+
+> Give me the details of current quarter of the year.
+> Give me quarter details after two month from current date
+> Give me quarter details before sixe month from current date
+
+> Give me the details of those employees who joined the org last quarter of the year
+  WHERE TO_CHAR(Hiredate,'Q')=4
+
+> Give me the details of those employees who joined the org first quarter of the year
+
+
+> Give me the details of those employees who joined the org in 3rd quarter of the year
+
+> How to spelled given number.
+SELECT TO_CHAR(TO_DATE(&No,'J'),'JSP') FROM Dual
+
+> How many seconds completed in today.
+  SELECT TO_CHAR(SYSDATE,'SSSSS') FROM Dual
+
+> How many seconds are left in today
+  SELECT 24*60*60 - TO_CHAR(SYSDATE,'SSSSS') FROM Dual
+
+> Display day of the joining month of the emp suffixed by ST/ND/RD/TH
+  SELECT Ename,TO_CHAR(Hiredate,'ddTH') Day FROM Emp
+
+> Give me the details of those who joined the organization in June.
+
+GROUP FUNCTION:
+STUDENT() - 4000
+
+MCA	  - 500
+  >GIRLS  - 200
+  >BOYS   - 300
+
+BTEK	  - 2500
+  >GIRLS  - 1000
+    >CS
+     18Y
+     19Y
+     20Y
+    >IT
+    >EC
+  >BOYS   - 1500
+
+PPT       - 1000
+  >GIRLS  - 400
+  >BOYS   - 600
+
+Emp(14)
+  Deptno
+  10=> 3
+       DESIGN(JOB)
+       > PRESIDENT
+       > MANAGER
+       > CLERK
+
+  20=> 5
+  30=> 6
+> How many employees are working in their respected departement excepting those department which has more than 5 emp.
+
+> Count the emp of each department excepting department having more than 5 emp.
+
+HAVING COUNT(*)<=5
+
+> Give me the average payment details of the organization.
+  SELECT AVG(Sal) FROM Emp;
+
+> Give me the average payement details of the employee departmentwise.
+  SELECT AVG(Sal) FROM Emp GROUP BY Deptno;
+
+> Give me average payment details of the employees based on their designation.
+  SELECT Job,ROUND(AVG(Sal)) FROM Emp GROUP BY Job
+ 
+> Give me average payment details of the employees designation wise excepting salesman.
+  SELECT Job,ROUND(AVG(Sal)) 
+  FROM Emp 
+  WHERE UPPER(Job) != 'SALESMAN'
+  GROUP BY Job
+
+> Give me average payment details of each department excepting department having average payment more than 4000.
+  SELECT AVG(Sal)
+  FROM Emp
+  GROUP BY Deptno
+  HAVING AVG(Sal) <= 4000
+ 
+  
+> Give me designation wise average payement details excepting managers and designation having average payement lessthatn 2000.
+
+  SELECT AVG(Sal) Average
+  FROM Emp
+  WHERE Job!='MANAGER'
+  GROUP BY Job
+  HAVING AVG(Sal) < 2000
+  ORDER BY Average
+
+  SELECT AVG(Sal) Average
+  FROM Emp
+  WHERE Job!='MANAGER'
+  GROUP BY Job
+  HAVING AVG(Sal) < 2000
+  ORDER BY AVG(Sal)
+
+> Give me designation wise average payement details excepting clerk and designation having average payement lessthatn 2000.
+
+AVG(),MIN(),MAX(),SUM(),COUNT()  
+
+> Give me lowest payement details of the org. 
+  SELECT MIN(Sal) FROM Emp;
+> Give me lowest payement details of the departement.
+  SELECT Deptno,MIN(Sal) FROM Emp GROUP BY Deptno;
+> Give me designation wise lowest payement details of the org. 
+    SELECT Job,MIN(Sal) FROM Emp GROUP BY Job;
+> Give me highest payement details of the org. 
+  SELECT MAX(Sal) FROM Emp;
+
+> Give me highest payement details of the departement.
+  SELECT Deptno,MAX(Sal) FROM Emp GROUP BY Deptno;
+
+> Give me designation wise highest payement details of the org. 
+  SELECT Job,MAX(Sal) FROM Emp group by job;
+
+> Give me monthly total payement details of the org. 
+  SELECT SUM(Sal) FROM Emp;
+
+> Give me yearly total payement details of the org. 
+  SELECT SUM(Sal)*12 FROM Emp;
+
+> Give me total payement details of the departmentwise.
+  SELECT Deptno,SUM(Sal) FROM Emp group by deptno
+> Give me designation wise total payement details of the org. 
+
+> Give me lowest,highest,total payment details of each degignation departement wise.
+
+SELECT MIN(Sal) Lowest,MAX(Sal) High,SUM(Sal) Total
+FROM Emp
+GROUP BY Deptno,Job
+
+> In which department having minimum average payement.
+
+> Give me departmentwise average payement details of the departement having average payment more than 2900.
+  SELECT Deptno,AVG(Sal)
+  FROM Emp
+  GROUP BY Deptno
+  HAVING AVG(Sal) > 2900;
+> Give me designation wise total payement details excepting salesman and designation having total payement more than 5000.
+
+> what is highest average payement in the organization departement wise
+
+  SELECT MAX(AVG(sal))
+  FROM Emp
+  GROUP BY Deptno
+
+
+Course
+====================================
+sname	dob    doadd	coursename
+Gaurav  2010   2018      BT
+
+
+
+
+
+CREATE TABLE Sample
+(
+   sid   NUMBER(5) PRIMARY KEY,   --column level/IN line style
+   sname VARCHAR2(10) NOT NULL,   --column level/IN line style
+   sdate DATE
+);
+
+CREATE TABLE Sample
+(
+   sid   NUMBER(5),
+   sname VARCHAR2(10),
+   sdate DATE,
+   CONSTRAINT  Sample_sid_PK PRIMARY KEY(sid),
+   CONSTRAINT  Sample_sname_NN NOT NULL(sname)
+);
+Ex:
+CREATE TABLE Sample02
+(
+  sname  VARCHAR2(10)  CONSTRAINT Sample02_sname_NN NOT NULL,
+  sdate  DATE
+)
+Ex:
+CREATE TABLE Sample02
+(
+  sname  VARCHAR2(10),
+  sdate  DATE,
+  CONSTRAINT Sample02_sname_NN NOT NULL(sname)
+);
+
+Ex:
+Address(city,state,pincode);
+CREATE TABLE Student
+(
+  sno number NOT NULL,
+  sname VARCHAR2(10) NOT NULL,
+  addr ADDRESS NOT NULL  --INVALID
+);
+
+Ex1:
+CREATE TABLE Sample03
+(
+  A1  VARCHAR2(5) UNIQUE,
+  A2  VARCHAR2(5),
+  A3  VARCHAR2(5)
+);
+Ex2:
+CREATE TABLE Sample03
+(
+  A1  VARCHAR2(5) CONSTRAINT Sample03_A1_UNQ UNIQUE,
+  A2  VARCHAR2(5),
+  A3  VARCHAR2(5)
+);
+Ex3: 
+CREATE TABLE Sample03
+(
+  A1  VARCHAR2(5),
+  A2  VARCHAR2(5),
+  A3  VARCHAR2(5),
+  CONSTRAINT Sample03_A1_UNQ UNIQUE(A1)
+);
+EX4:
+CREATE TABLE Sample03
+(
+  A1  VARCHAR2(5),
+  A2  VARCHAR2(5),
+  A3  VARCHAR2(5),
+  CONSTRAINT Sample03_A1_UNQ UNIQUE(A1),
+  CONSTRAINT Sample03_A2_UNQ UNIQUE(A2)
+);
+EX4:
+CREATE TABLE Sample03
+(
+  A1  VARCHAR2(5),
+  A2  VARCHAR2(5),
+  A3  VARCHAR2(5),
+  CONSTRAINT Sample03_A1_A2_UNQ UNIQUE(A1,A2)
+);
+
+Ex5:
+CREATE TABLE Sample01
+(
+  sid VARCHAR2(5) UNIQUE NOT NULL,
+  sname VARCHAR2(10) NOT NULL
+);
+Ex6:
+CREATE TABLE Sample02
+(
+  sid VARCHAR2(5) 
+  CONSTRAINT Sample02_sid_UNQ UNIQUE 
+  CONSTRAINT Sample02_sid_NN NOT NULL,
+  sname VARCHAR2(10) NOT NULL
+)
+/
+
+Syntax of Primary key:
+Case1:
+CREATE TABLE Sample01
+(
+  sid VARCHAR2(5) PRIMARY KEY,
+  sname VARCHAR2(10)
+);
+
+Case2:
+CREATE TABLE Sample02
+(
+  sid NUMBER(5) PRIMARY KEY,
+  sname VARCHAR2(10)
+);
+
+Case3:
+CREATE TABLE Sample03
+(
+  sid NUMBER(5) CONSTRAINT Sample03_sid_PK PRIMARY KEY,
+  sname VARCHAR2(10)
+);
+Case4:
+CREATE TABLE Sample04
+(
+  sid NUMBER(5),
+  sname VARCHAR2(10),
+  CONSTRAINT Sample03_sid_PK PRIMARY KEY(sid)
+);
+
+Case5:
+CREATE TABLE Sample05
+(
+  sid NUMBER(5),
+  sname VARCHAR2(10),
+  CONSTRAINT Sample05_sid_PK PRIMARY KEY(sid),
+  CONSTRAINT Sample05_sname_PK PRIMARY KEY(sname) --INVALID
+)
+
+Case6:
+CREATE TABLE Sales
+(
+  purcid	VARCHAR2(10),
+  custid	VARCHAR2(10),
+  prodid	VARCHAR2(10),
+  qty		NUMBER(5),
+  amount	NUMBER(10),
+  salesdate	DATE,
+  CONSTRAINT Sales_purcid_custid PRIMARY KEY(purcid,custid)
+);
+
+Case7: valid but not recommended
+CREATE TABLE Sample02
+(
+  sid   NUMBER(5) PRIMARY KEY NOT NULL,
+  sname VARCHAR2(10),
+  sdate DATE
+)
+
+Case8:
+CREATE TABLE Sample03
+(
+  sid   NUMBER(5) PRIMARY KEY UNIQUE,
+  sname VARCHAR2(10),
+  sdate DATE
+);
+
+
+
+
+
+
+Foreign Key example:
+CAse1:
+CREATE TABLE SamplePK01
+(
+  Sid NUMBER(2) CONSTRAINT Sample01_sid_PK PRIMARY KEY,
+  Sname VARCHAR2(5),
+  Sdate DATE
+)
+//Column level declaration
+CREATE TABLE SampleFK01
+(
+  Sid NUMBER(2) 
+  CONSTRAINT SampleFK01_Sid_FK REFERENCES SamplePF01(sid)
+  Saddr VARCHAR2(5),
+  SPhone DATE
+)
+Column: CONSTRAINT Cname REFERENCES Tablename(Colname)
+Table :  CONSTRAINT Cname  FOREIGN KEY (FKCol) REFERENCES PKTablename(PKCol)
+
+//Table Level Declaration
+CREATE TABLE SampleFK02
+(
+  Sid NUMBER(2),
+  Saddr VARCHAR2(5),
+  SPhone VARCHAR2(5),
+  CONSTRAINT SampleFK02_Sid_FK FOREIGN KEY(sid) REFERENCES SamplePK01(sid)
+) 
+
+Case2:
+CREATE TABLE SampleUNQ03
+(
+  Sid NUMBER(2) UNIQUE,
+  Sname VARCHAR2(5) NOT NULL,
+  Sdate DATE
+);
+CREATE TABLE SampleFK03
+(
+  Sampid NUMBER(2) CONSTRAINT SampleFK03_Sid_FK REFERENCES SampleUNQ03(sid),
+  saddr VARCHAR2(5)
+)
+Case3:
+CREATE TABLE SampleNN04
+(
+  Sid NUMBER(2) NOT NULL,
+  Sname VARCHAR2(5) NOT NULL,
+  Sdate DATE
+)
+CREATE TABLE SampleFK04
+(
+  Sampid NUMBER(2) CONSTRAINT SampleFK04_Sid_FK 
+  REFERENCES SampleNN04(sid),
+  saddr VARCHAR2(5)
+)
+Case4:
+CREATE TABLE SamplePK05
+(
+  Sid NUMBER(2),
+  Sname VARCHAR2(5),
+  Sdate DATE,
+  CONSTRAINT SamplePK05_Sid_sname_PK PRIMARY KEY(Sid,Sname)
+)
+CREATE TABLE SampleFK05
+(
+  Sampid NUMBER(2),
+  Sampname VARCHAR2(5),
+  Sdate DATE,
+  CONSTRAINT SampleFK05_Sid_sname_PK FOREIGN KEY(Sampid,Sampname) REFERENCES SamplePK05(sid,sname)
+)
+invalid:
+CREATE TABLE SampleFK06
+(
+  Sampid NUMBER(2),
+  Sampname VARCHAR2(5),
+  Sdate DATE,
+  CONSTRAINT SampleFK06_Sid_sname_PK FOREIGN KEY(Sampid,Sampname) REFERENCES SamplePK05(sname,sid)
+)
+valid:
+CREATE TABLE SampleFK06
+(
+  Sampid NUMBER(2),
+  Sampname VARCHAR2(5),
+  Sdate DATE,
+  CONSTRAINT SampleFK06_Sid_sname_PK FOREIGN KEY(Sampname,Sampid) REFERENCES SamplePK05(sname,sid)
+)
+valid: (Not Recommended)
+CREATE TABLE SampleFK07
+(
+  Sampid NUMBER(5),
+  Sampname VARCHAR2(5),
+  Sdate DATE,
+  CONSTRAINT SampleFK08_Sid_sname_PK FOREIGN KEY(Sampname,Sampid) REFERENCES SamplePK05(sname,sid)
+)
+valid: (Not Recommended)
+CREATE TABLE SampleFK08
+(
+  Sampid NUMBER(1),
+  Sampname VARCHAR2(5),
+  Sdate DATE,
+  CONSTRAINT SampleFK09_Sid_sname_PK FOREIGN KEY(Sampname,Sampid) REFERENCES SamplePK05(sname,sid(2))
+)
+
+Case06:
+CREATE TABLE Dept1
+(
+  Deptno NUMBER(2) PRIMARY KEY,
+  Dname VARCHAR2(10) NOT NULL,
+  Loc VARCHAR2(12)
+);
+INSERT INTO Dept1 SELECT *FROM Dept;
+CREATE TABLE Emp1
+(
+  Empno NUMBER(4) PRIMARY KEY,
+  Ename VARCHAR2(10) NOT NULL,
+  Salary NUMBER(7,2),
+  Dept NUMBER(2) CONSTRAINT Emp1_Dept_FK references Dept1(Deptno)
+  ON DELETE CASCADE
+);
+INSERT INTO Emp1 SELECT Empno,Ename,Sal,Deptno FROM Emp WHERE job!='ANALYST'
+
+Case: ON DELETE CASCADE
+CREATE TABLE Emp2
+(
+  Empno NUMBER(4) PRIMARY KEY,
+  Ename VARCHAR2(10) NOT NULL,
+  Salary NUMBER(7,2),
+  Dept NUMBER(2) CONSTRAINT Emp1_Dept_FK references Dept1(Deptno)
+  ON DELETE CASCADE
+);
+INSERT INTO Emp2 SELECT Empno,Ename,Sal,Deptno FROM Emp;
+Case: ON DELETE CASCADE
+CREATE TABLE Emp3
+(
+  Empno NUMBER(4) PRIMARY KEY,
+  Ename VARCHAR2(10) NOT NULL,
+  Salary NUMBER(7,2),
+  Dept NUMBER(2) CONSTRAINT Emp3_Dept_FK references Dept1(Deptno)
+  ON DELETE set null
+);
+INSERT INTO Emp3 SELECT Empno,Ename,Sal,Deptno FROM Emp;
+
+
+> Give me the name information of top 5 highest payement employee
+
+Example:
+CREATE TABLE Sample01
+(
+  Id NUMBER(5) CHECK(Id>0),
+  Name VARCHAR2(10)
+)
+
+CREATE TABLE Sample02
+(
+  Id NUMBER(5) 
+  CONSTRAINT Sample02_Id_CHK CHECK(Id>0),
+  Name VARCHAR2(10)
+)
+
+
+CREATE TABLE Sample03
+(
+  Id NUMBER(5),
+  Name VARCHAR2(10),
+  CONSTRAINT Sample03_Id_CHK CHECK(Id>0)
+)
+
+Check vs DEFAULT:
+CREATE TABLE Sample01
+(
+  sid NUMBER(5) NOT NULL,
+  sname VARCHAR2(10) DEFAULT 'GUEST' CONSTRAINT Sample01_sname_CHK 
+   CHECK(Sname=UPPER(sname)),
+  sdate DATE DEFAULT SYSDATE
+)
+
+> insert
+INSERT INTO Sample01 VALUES('101','AMAN')--invalid
+INSERT INTO Sample01(sid,sname) VALUES('101','AMAN'); valid
+INSERT INTO Sample01 VALUES('102','AMAN',''); =>101 AMAN NULL
+INSERT INTO Sample01 VALUES('103','AMAN',null); =>101 KAALU NULL
+
+Adding new constraint upon a existing table (Dept):
+ALTER TABLE Dept ADD CONSTRAINT Dept_Deptno_PK PRIMARY KEY(Deptno);
+ALTER TABLE Dept MODIFY CONSTRAINT Dept_Dname_NN NOT NULL(Dname);
+
+ALTER TABLE Dept
+ADD CONSTRAINT Dept_Deptno_CHK 
+CHECK(Deptno IN(10,20,30,40,50,60,70,80,90)); 
+
+
+To check available constraints details:
+SELECT Constraint_Name Name,Table_Name FROM User_constraints;
+
+Adding multipal constraints:
+
+ALTER TABLE Dept
+ADD CONSTRAINT Dept_Dname_CHK1 CHECK(Dname = UPPER(Dname))
+ADD CONSTRAINT Dept_Loc_CHK1 CHECK(Loc = UPPER(Loc))
+
+
+Dropping constraints:
+ALTER TABLE Dept DROP PRIMARY KEY;
+ALTER TABLE Dept DROP CONSTRAINT Dept_Deptno_CHK; //recommended
+
+ALTER TABLE Dept DROP CONSTRAINT Dept_Loc_CHK1;
+
+Disabling a constraint at the time of table creation:
+CREATE TABLE Sample01
+(
+  sid NUMBER(5) CONSTRAINT Sample01_sid_NN NOT NULL DISABLE,
+  sname VARCHAR2(10)
+ )
+
+SELECT Constraint_Name Name,Table_Name,STATUS FROM User_constraints;
+
+ALTER TABLE Sample01 ENABLE CONSTRAINT Sample01_sid_NN;
+ALTER TABLE Sample01 DISABLE CONSTRAINT Sample01_sid_NN;
+
+
+Department:
+Deptno NUMBER(22): PRIMARY KEY,(10,20,30,40,50,60,70,80,90)
+Dname VARCHAR(10): NOT NULL
+Loc   VARCHAR2(10): NOT NULL
+
+Table: Departement/Dept
+CREATE TABLE Department
+(
+   Deptno NUMBER(2) 
+   CONSTRAINT Dept_Deptno_PK PRIMARY KEY 
+   CONSTRAINT Dept_Deptno_CHK CHECK(Deptno IN(10,20,30,40,50,60,70,80,90)),
+
+   Dname VARCHAR(10) CONSTRAINT Dept_Dname_NN NOT NULL,
+
+   Loc   VARCHAR2(10) CONSTRAINT Dept_Loc_NN NOT NULL
+);
+
+  
+CREATE TABLE Employee
+(
+   EMPNO NUMBER(4),
+   ENAME  VARCHAR2(10) CONSTRAINT Emp_ename_NN NOT NULL,
+   JOB VARCHAR2(10) CONSTRAINT Emp_Job_NN NOT NULL,
+   MGR NUMBER(4),
+   SAL NUMBER(7,2) NOT NULL,
+   COMM NUMBER(4),
+   HIREDATE DATE NOT NULL,
+   DEPTNO  NUMBER(2) CONSTRAINT Emp_Deptno_NN not null,
+   CONSTRAINT Emp_Empno_PK PRIMARY KEY(Empno),
+   CONSTRAINT Emp_Ename_CHK CHECK(Ename = UPPER(Ename)),
+   CONSTRAINT Emp_Job_CHK CHECK(Job IN('PRESIDENT','CLERK','ANALYST','MANAGER','SALESMAN')),
+   CONSTRAINT Emp_Mgr_FK FOREIGN KEY(Mgr) REFERENCES Employee(Empno),
+   CONSTRAINT Emp_Deptno_FK FOREIGN KEY(Deptno) 
+   REFERENCES Department(Deptno)
+) 
+
+INSERT INTO Department SELECT *FROM Dept;
+
+INSERT INTO Employee SELECT *FROM Emp ;
+
+DROP TABLE Dept;
+DROP TABLE Emp;
+
+rename Department to Dept;
+
+rename Employee to Emp;
+
+commit;
+
+Join and Sub query (Most Imp):
+
+> Give me employee details along with their respected department name information.
+
+SELECT E.Ename Employee, E.Job Desig,D.Dname,D.Loc
+FROM Emp e,Dept d
+WHERE E.Deptno = D.Deptno;
+
+SELECT INITCAP(e.ename||' is working for department '||d.dname||' which is located in '||D.Loc) Info
+FROM Emp e,Dept d
+WHERE E.Deptno = D.Deptno;
+
+> Give me the department name details of king.
+
+SELECT E.Ename Employee, E.Job Desig,D.Dname,D.Loc
+FROM Emp e,Dept d
+WHERE e.deptno = d.deptno AND ename='KING';
+
+Q> How many records selected by the given query
+	SELECT COUNT(*)
+	FROM Emp e,Dept d
+	WHERE  E.deptno=d.deptno OR ename='KING'
+Q> Give me the department details of all managers of the organization whose monthly salary is 2000 or more.
+
+
+SELECT Ename,Sal,Job,Dname,Loc
+FROM Emp e,Dept d
+WHERE e.deptno=d.deptno AND (Job='MANAGER AND Sal>=2000)
+
+Practice Query:
+Q: How many employees are working in the same department of king.
+SELECT COUNT(*)
+FROM Emp k,Emp e
+WHERE k.ename='KING' AND k.deptno=e.deptno
+
+
+Q: Give me the information of the employees who is working with kings department.
+SELECT E.ename,e.job,e.sal,e.deptno
+FROM Emp k,Emp e
+WHERE k.ename='KING' AND k.deptno=e.deptno
+
+Q: Give me the name and location details of the department having analyst.
+SELECT DISTINCT Dname,Loc,e.Job
+FROM Emp e,Dept d
+WHERE e.job='ANALYST' AND e.deptno=d.deptno;
+
+Q: Give me the information of those employees whose monthly income is same as martin.
+SELECT e.Ename,e.Sal
+FROM Emp e,Emp m
+WHERE e.sal=m.sal AND m.ename='MARTIN' AND e.ename!='MARTIN' 
+
+
+Q: Give me the information of those employees whose income is more then allen.
+SELECT e.ename,e.sal
+FROM Emp a,Emp e
+WHERE a.ename='ALLEN' AND e.sal > a.sal;
+
+Q: Give me the information of those employees whose income is less  then of allen.
+
+Q: Give me all junior details of the ford.
+
+  SELECT j.ename,j.job,j.hiredate,j.deptno
+  FROM Emp f,Emp j 
+  WHERE f.ename='FORD' AND f.hiredate < j.hiredate
+
+Q: Give me the all serior details of the turner.
+  SELECT j.ename,j.job,j.hiredate,j.deptno
+  FROM Emp f,Emp j 
+  WHERE f.ename='TURNER' AND f.hiredate > j.hiredate
+
+Q: Give me the total monthly payment of all departments excepting kings department.
+SELECT t.Deptno,SUM(t.Sal) 
+FROM Emp t,Emp k
+WHERE k.ename='KING' AND t.deptno!=k.deptno
+GROUP BY t.Deptno
+
+
+Q: Give me information of those department thats avergage salary is more than the salary of turner.
+
+Q: Give me the details of those employees whose designation are same as of smith but income is more then of smith.
+SELECT e.ename,e.job,e.sal
+FROM Emp sm,Emp e
+WHERE sm.ename='SMITH' AND sm.job=e.job AND e.sal>sm.sal
+
+
+Q: Give me information of those employee whose income is lowest in their respected departments.
+
+Q: Give the supervisor/manager details of all employees.
+   SELECT e.ename Employee,m.ename Manager
+   FROM Emp e,Emp m
+   WHERE e.mgr = m.empno
+
+Q: Give me the details of supervisors.
+   Give me the details of those person who acts like manager to other employees.
+   Give me the details of those person who controls other one/emp.
+ 
+   SELECT DISTINCT m.ename Name,m.sal,m.hiredate,m.job
+   FROM Emp e,Emp m
+   WHERE e.mgr = m.empno
+
+Q: Count the number employees irrespective of supervisrs.
+   Give the details how many employees controlled by their respected supervisor.
+   SELECT m.ename,COUNT(e.ename)
+   FROM Emp e,Emp m
+   WHERE e.mgr  = m.empno
+   GROUP BY e.mgr,m.ename
+
+Q: Give me the manager details of all employees along with department name the employees.
+SELECT E.ename,de.dname,m.ename
+FROM Emp e,Dept de,Emp m
+WHERE e.deptno=de.deptno AND e.mgr=m.empno
+
+
+Q: Give me the manager details of all employees along with department name of the manager and department name of the emp.
+SELECT E.ename,de.dname,m.ename,dm.dname
+FROM Emp e,Dept de,Emp m,Dept dm
+WHERE e.deptno=de.deptno AND e.mgr=m.empno AND m.deptno=dm.deptno
+
+
+Q: Give me the manager details of all employees along with department name of the employees and managers.
+
+Q: Give me the details of those employees whose monthly income is more then of their supervisor/manager.
+
+Q: How many employees in the organization whose is controlling others.
+Q: Give me the details of those employees whose is working under blake.
+
+Q: How many employees working as a clerk in the department of clark.
+
+Q: Give me the employee details who is working under the king.
+
+Compare case1 and case2:
+CASE1:
+	SELECT e.ename Employee,m.ename Manager
+	FROM Emp e,Emp m
+	WHERE e.mgr = m.empno AND m.ename='KING'
+
+CASE2:
+	SELECT E.ename
+	FROM   Emp e 
+	WHERE  e.empno = (SELECT DISTINCT NVL(mgr,0) FROM Emp)
+
+> Give me grade information of all employees based on their monthly salary.
+
+
+Q: Give me the details of those employees whose monthly income is more than of their managers.
+
+SELECT e.ename,e.sal,m.ename,m.sal
+FROM Emp employee,Emp manager
+WHERE e.mgr = m.empno;
+
+Q: Give me department details of all analyst and managers.
+
+Q: Give me department details of all employees excepting employee of the sales department.
+
+Q: Give me manager details of all clerks.
+
+Q: Give me the details of grade 5 employees.
+
+Q: Give me the details of grade 3 employees.
+
+Q: Give me the details of those employee whose grade b/w 2 and 4 (inclusive)
+
+Q: Give me the employee name along with grade and department name.
+   Emp,Salgrade,Dept
+ 
+Q: Give me the employee name along with grade and department name.
+   excepting department 20 and employee grade is more then of 2.
+
+Q: Give me the employee and manager details along with their grade.
+Q: Give me the employee and manager details along with their grade and department names.
+  Emp e,Salgrade se,Dept de,Emp m,Salgrade sm,Dept dm
+
+Give me the details of those department that average sal is more than sal of Turner  
+SELECT e.Deptno,AVG(e.sal)
+FROM Emp e,Emp t
+WHERE t.ename='TURNER'
+GROUP BY e.deptno,t.sal
+HAVING AVG(e.Sal) > t.sal
+
+Q: Give me the deteails of any jobs of dept 10, those that are not found in dept 20 using joins.
+
+
+Q: Give me the employee and manager details along with their grade and department names.
+
+Q: Give me the manager details of all employees.
+   SELECT E.ename Employee,M.Ename Manager
+   Emp e,Emp m
+   WHERE e.mgr = m.empno
+
+   SELECT e.ename,NVL(m.ename,'Not Available')
+   FROM Emp e,Emp m
+   WHERE E.mgr = m.empno(+)
+
+Q: how many records are selected
+SELECT COUNT(*)
+FROM Emp e,Emp m
+WHERE E.mgr(+) = m.empno 
+output: 21
+
+Q:how many records are selected
+SELECT COUNT(*)
+FROM Emp e,Dept d
+WHERE e.deptno(+)=d.deptno
+ans: 15
+
+Q: Give me the details of working departments.
+   SELECT DISTINCT dname,loc
+   FROM Emp e,Dept d
+   WHERE E.deptno=d.deptno
+
+Q: Give me the details of non working departments.
+   SELECT d.deptno,Dname
+   FROM Emp e,Dept d  
+   WHERE E.deptno(+)=d.deptno and e.ename IS NULL
+
+Q: Give me the details of any jobs of dept 10 those that are not found in dept 20 using joins.
+
+SELECT e10.ename,e10.job
+FROM Emp e10 , Emp e20
+WHERE e10.job=e20.job(+) and e10.deptno=10 AND e20.deptno(+)=20 AND e20.ename IS NULL
+
+
+Q: Give me the details of any jobs of dept 30 those that are not found in dept 10 using joins.  
+
+SELECT E.Ename Emp,M.ename Mgr
+FROM Emp e,Emp m
+WHERE  e.mgr = m.empno(+) AND m.ename='KING'
+
+Q: how many rows are selected by given sql statement?
+SELECT COUNT(*)
+FROM Emp e,Emp m
+WHERE  e.mgr = m.empno(+) AND m.ename='KING'
+
+ans: 3
+
+Q: how many rows are selected by given sql statement?
+SELECT COUNT(*)
+FROM Emp e,Emp m
+WHERE  e.mgr = m.empno AND m.ename='KING'
+ans: 3
+
+Q: how many rows are selected by given sql statement?
+SELECT COUNT(*)
+FROM Emp e,Emp m
+WHERE  e.mgr = m.empno AND m.ename(+)='KING'
+ans: 3
+
+Q: how many rows are selected by given sql statement?
+SELECT COUNT(*)
+FROM Emp e,Emp m
+WHERE  e.mgr = m.empno(+) AND m.ename(+)='KING'
+
+Q: how many rows are selected by given sql statement?
+SELECT count(*)
+FROM Emp e,Emp m
+WHERE  e.mgr(+) = m.empno AND m.ename='KING'
+ans: 3
+
+Q: how many rows are selected by given sql statement?
+
+SELECT count(*)
+FROM Emp e,Emp m
+WHERE  e.mgr(+) = m.empno(+) AND m.ename='KING'
+ans: invalid
+
+SELECT count(*)
+FROM Emp e,Emp m
+WHERE  e.mgr = m.empno(+) AND m.ename(+)='KING' 
+       AND e.deptno=30
+ans: 6
+
+Q:
+SELECT count(*)
+FROM Emp e,Emp m
+WHERE  e.sal > m.sal;
+
+ans: 89
+
+Q: Give me information of those employees along with their manamager names whose income is more then of their respected supervisors.
+SELECT e.ename,e.sal,m.ename,m.sal
+FROM Emp e,Emp m
+WHERE   e.mgr = m.empno and e.sal > m.sal
+
+Q: Give me information of those employees along with their manamager names whose income is less then of their respected managers.
+
+SELECT e.ename,e.sal,m.ename,m.sal
+FROM Emp e,Emp m
+WHERE   e.mgr = m.empno and e.sal < m.sal
+
+Q: how many rows selected
+SELECT e.ename,e.sal,m.ename,m.sal
+FROM Emp e,Emp m
+WHERE   e.mgr = m.empno(+) and e.sal < m.sal(+) 
+ans: 14
+
+Q: How many rows selected
+SELECT e.ename,e.sal,m.ename,m.sal
+FROM Emp e,Emp m
+WHERE   e.mgr = m.empno(+) and e.sal < m.sal(+) AND e.mgr IS NULL
+
+OUTER JOIN:
+SELECT ename,dname
+FROM Emp , Dept 
+WHERE emp.deptno(+)=dept.deptno
+
+SELECT ename,dname
+FROM Emp RIGHT JOIN Dept ON emp.deptno=dept.deptno
+SUB Query:
+> Give me the employee income details along with lowest,average,highest payment in the org.
+
+SELECT Ename,Sal,
+(SELECT MIN(sal) FROM Emp) Low,
+(SELECT AVG(sal) FROM Emp) Avg,
+(SELECT MAX(sal) FROM Emp) High
+FROM Emp 
+
+> Give me the details of those employees whose department no is same as king.
+
+SELECT Ename,Deptno
+FROM Emp
+WHERE Deptno=(SELECT Deptno FROM Emp WHERE Ename='KING')
+
+
+> Give me the details of those employees whose department name is same as martin along with department name.
+
+> Give me the employee details of all employees along with their manager name of the respected departement.
+
+Q> Give me the details of those employees whose designation same as of the allen.
+
+SELECT ename,job
+FROM Emp
+WHERE Job = (SELECT Job FROM Emp WHERE Ename='ALLEN');
+
+
+Q> Give me the details of those employees whose designation same as of the allen. Excepting providing allen details.
+
+Q> Give me the details of those employees who is working under the ford.
+
+Q> Who is controlling ford.
+
+SELECT Ename,Job,Sal
+FROM Emp
+WHERE empno = (SELECT Mgr FROM Emp WHERE ename='FORD')
+ 
+Q: Give me the details of those departments which having more than 4 employeements.
+
+
+SELECT Deptno,Dname,Loc
+FROM Dept
+WHERE deptno IN(SELECT deptno FROM Emp GROUP BY Deptno HAVING COUNT(*)>4)
+
+
+Q: Give me details of those employees whose designation is same as of smith but working in different department of smith.
+SELECT Ename,Job,Deptno
+FROM Emp
+WHERE Job = (SELECT Job FROM Emp WHERE Ename='SMITH') AND Deptno!=(SELECT Deptno FROM Emp WHERE Ename='SMITH')
+
+Q: Give me details of those employees whose designation is same as of smith and also working in the same department.
+
+SELECT Ename,Job,Deptno
+FROM Emp
+WHERE (Job,Deptno)=(SELECT Job,Deptno FROM Emp WHERE ename='SMITH');
+
+Q: Give me details of those employees who is hired in same year of the king.
+
+SELECT Ename,Hiredate
+FROM Emp
+WHERE TO_CHAR(hiredate,'YYYY')=
+(SELECT TO_CHAR(hiredate,'YYYY') from emp WHERE Ename='KING');
+
+
+
+Q: Give me details of those employees who is hired in same month of the FORD.
+SELECT Ename,Hiredate
+FROM Emp
+WHERE TO_CHAR(hiredate,'MON')=
+(SELECT TO_CHAR(hiredate,'MON') from emp WHERE Ename='FORD')
+ AND Ename!='FORD'
+
+
+Q: Give me the junior details of the ward.
+   SELECT  Ename,Hiredate
+   FROM Emp
+   where hiredate > (SELECT hiredate FROM Emp WHERE ename='WARD')
+Q: Give me the senior details of the scott.
+   SELECT  Ename,Hiredate
+   FROM Emp
+   where hiredate < (SELECT hiredate FROM Emp WHERE ename='SCOTT')
+
+Q: Give me details of the employees whose designation is same as blake but working in department of adams.
+
+SELECT Ename,Job,Deptno
+FROM Emp
+WHERE Job=(SELECT Job FROM Emp WHERE ename='BLAKE') AND Deptno=(SELECT Deptno FROM Emp WHERE ename='ADAMS');
+
+
+SELECT Job FROM Emp WHERE ename='BLAKE'
+SELECT Deptno FROM Emp WHERE ename='ADAMS'
+
+SELECT Ename,Job,Deptno
+FROM Emp
+WHERE (Job,Deptno)=(SELECT (SELECT Job FROM Emp WHERE ename='BLAKE'),(SELECT Deptno FROM Emp WHERE ename='ADAMS') FROM Dual)
+
+Give me the details of those employees whose income is minimum in the org.
+
+SELECT Ename,Sal
+FROM Emp
+WHERE sal = (SELECT MIN(Sal) FROM Emp);
+
+Give me the details of those employees whose income is maximum in the org.
+
+Give me the details of those employees whose income is more then of average payment of the org.
+SELECT Ename,Sal
+FROM Emp
+WHERE sal > (SELECT AVG(Sal) FROM Emp);
+
+
+
+Give me the details of those employees whose income is minimum in their departement.
+select ename, sal,deptno 
+from emp 
+where (deptno,sal) IN(select deptno,min(sal)from emp group by deptno)
+
+Q1: give me the details of those employees whose monthly income is more than of employee 7566.
+
+Q2: Give me the details of those person who joined org after joining turner(juniour details of turner)
+
+Q: Give me the details of those person whose designation same as of smith.
+
+Q: Give me the details of those person whose is working in sales department.
+
+SELECT Ename,Job,Deptno
+FROM Emp
+WHERE deptno=(SELECT Deptno FROM Dept WHERE dname='SALES')
+
+Q: Give me the details of those person whose is working in dallas.
+SELECT Ename,Job,Deptno
+FROM Emp
+WHERE deptno=(SELECT Deptno FROM Dept WHERE loc='DALLAS')
+
+
+Q: Give me the details of those person whose income is minimum in the org.
+
+Q: Give me the details of those person whose income is maximum in the org.
+
+Q: Give me minimum payment details of those department whose mimimum payment is more than minimum payment of the department 20.
+SELECT deptno,MIN(sal)
+FROM Emp
+GROUP BY Deptno
+HAVING MIN(Sal) > (SELECT MIN(sal) FROM Emp WHERE deptno=20)
+
+
+Q: Give me the average payment details of the job type whose average payment is minimum in the organization along with job type.
+ 
+Q: Give me the designation wise average payment details of each job,whose average payment is less than of maximum average of the job.
+
+Q: Give me the average  payment details of those job whose average is less than of average of the department whose average is maximum.
+
+Q: Give me the income details of those emplyees whose monthly salary is equavalent of minimum salary of any department.
+
+SELECT ename,job,deptno,sal
+FROM Emp
+WHERE sal IN(SELECT MIN(Sal) FROM Emp GROUP BY Deptno);
+ 
+Give me the details of those employees whose income is minimum in their job type.
+
+Q: Give me the details of those employees whose salary is less than of any clerk.
+SELECT Ename,Job,Sal
+FROM Emp
+WHERE sal < ANY(SELECT Sal FROM Emp WHERE job='CLERK')
+
+Q: Give the details of those employees whose income is less then of all employee of the departement 20 excepting clerk of that department
+
+SELECT Ename,Job,Sal,Deptno
+FROM Emp
+WHERE Sa <ANY(SELECT Sal FROM Emp WHERE deptno=20 AND job!='CLERK')
+
+Q: Give me the employee details whose income is more than of average income of all department.
+
+
+
+Give me the details of those employees whose department number and salary is same as of FORD.
+
+SELECT Ename,Deptno,Sal
+FROM Emp
+WHERE Deptno = (SELECT Deptno FROM Emp WHERE Ename='FORD') AND Sal = (SELECT Sal FROM Emp WHERE Ename='FORD')
+
+WHERE (deptno,sal)=(SELECT Deptno,Sal FROM Emp WHERE Ename='FORD')
+  
+
+Sub Query Practice:
+> Give me details of highest paid employee of department 10.
+> Which department has maximum average salary.
+SELECT Deptno,AVG(Sal)
+FROM Emp
+GROUP BY Deptno
+HAVING AVG(Sal)=
+  (SELECT MAX(AVG(Sal)) FROM Emp GROUP BY Deptno)
+ 
+
+
+> Which department has minimum average salary.
+
+> Which designation has average payment is minimum.
+
+> Which designation has average payment is maximum.
+
+> find the employees whose salary between salary of miller and jones including miller and jones.
+
+SELECT Ename,Sal
+FROM Emp
+WHERE Sal BETWEEN (SELECT Sal FROM Emp WHERE Ename='MILLER')  AND  (SELECT Sal FROM Emp WHERE Ename='JONES')
+
+
+
+> find the all employees of sales department whose salary between salary of miller and jones, excluding miller and jones .
+SELECT Ename,Sal
+FROM Emp
+WHERE Sal BETWEEN (SELECT Sal FROM Emp WHERE Ename='MILLER')  AND  (SELECT Sal FROM Emp WHERE Ename='JONES') AND Deptno = (SELECT Deptno FROM Emp WHERE Dname='SALES')
+
+
+> find the all employees of sales department whose salary between salary of miller and jones and designation is same as allen, excluding miller and jones.
+SELECT Ename,Sal,Job
+FROM Emp
+WHERE Sal BETWEEN (SELECT Sal FROM Emp WHERE Ename='MILLER')  AND  (SELECT Sal FROM Emp WHERE Ename='JONES') AND Deptno = (SELECT Deptno FROM Dept WHERE Dname='SALES') AND Ename NOT IN('MILLER','JONES') AND Job=(SELECT Job FROM Emp WHERE Ename='ALLEN')
+ 
+
+
+> Give me the employee details having salary same as ford or ward.
+WHERE Sal IN (SELECT Sal FROM Emp WHERE Ename IN('WARD','FORD')
+
+> Give me the details of the employees whose income is minimum in their department.
+
+
+> Give me the details of the employees whose income is maximum in their job type.
+ 
+> Give the emp details whose salary is average in their job.
+
+> Give me emp details who is hired same date of employee hired in department 20 but they are not working for departement 20.
+SELECT Ename,Deptno,Hiredate
+FROM Emp
+WHERE Hiredate IN(SELECT Hiredate FROM Emp WHere deptno=20) AND deptno!=20
+
+> Give me the details of the employees whose salary is same as of those employees who joined the organation same date of any employee of the research department.
+  SELECT Ename,Hiredate,Sal,Deptno
+  FROM Emp
+  WHERE Sal IN(SELECT Sal FROM Emp WHERE hiredate IN(SELECT Hiredate FROM Emp
+  WHERE Deptno =
+        (SELECT Deptno FROM Dept WHERE Dname='RESEARCH')))
+
+> Give the details of the employee whose monthly income is more than of any employee of the departement 30.
+  
+  WHERE sal >ANY(SELECT Sal FROM Emp WHERE deptno=30)
+
+
+> Give me the details of the employees whose income is more of average salary of all departement.
+  SELECT Ename,Sal,Deptno
+  FROM Emp
+  WHERE Sal >ALL(SELECT AVG(Sal) FROM Emp GROUP BY Deptno)
+ 
+> Give me the details of the employees whose income is more than of the maximum average of the department.
+  SELECT Ename,Sal,Deptno
+  FROM Emp
+  WHERE Sal > (SELECT MAX(AVG(Sal)) FROM Emp GROUP BY Deptno)
+
+  
+Multi column sub query:
+> Give me the employee names whose salary is minimum in their respected department.
+
+WHERE (Deptno,Sal) IN(SELECT Deptno,MIN(Sal) FROM Emp GROUP BY deptno)
+
+> Give me the employee names whose salary is maximum in their respected department.
+
+> Give me the employee names whose salary is minimum in their job type.
+
+> Give me the employee names whose salary is maximum in their job type.
+
+> Give me the employee details whose salary is minimum in their job in respected department.
+
+Applying sub queries in from clause:
+> Give me the employee details along with average payment of their department.
+SELECT E.ename,E.deptno,E.sal,D.Avg
+FROM Emp e,(SELECT Deptno,ROUND(AVG(Sal)) Avg FROM Emp GROUP BY deptno) d
+WHERE e.deptno = d.deptno;
+
+
+> Give me the employee details along with total payment of their department.
+SELECT E.ename,E.deptno,E.sal,D.Total
+FROM Emp e,(SELECT Deptno,SUM(Sal) Total FROM Emp GROUP BY deptno) d
+WHERE e.deptno = d.deptno
+ORDER BY E.deptno
+
+
+
+> Give me the employee details along with average payment of their department and total payment of the organization.
+Case1:
+SELECT E.ename,E.deptno,E.sal,D.Avg,Total
+FROM Emp e,
+    (SELECT Deptno,ROUND(AVG(Sal)) Avg FROM Emp GROUP BY deptno) d,(SELECT SUM(Sal) Total FROM Emp) t
+WHERE e.deptno = d.deptno
+order by deptno
+
+SELECT E.ename,E.deptno,E.sal,D.Avg,(SELECT SUM(Sal) FROM Emp) Total
+FROM Emp e,
+    (SELECT Deptno,ROUND(AVG(Sal)) Avg FROM Emp GROUP BY deptno) d
+WHERE e.deptno = d.deptno
+order by deptno
+
+
+
+
+> Give me the details of the person whose income is more than of average payment of their department.
+
+
+> Give me the complete department information along with number of employees present in the department.
+SELECT d.deptno,d.dname,d.loc,c.total
+FROM Dept d,(SELECT deptno,COUNT(*) total FROM Emp GROUP BY Deptno) c
+WHERE D.deptno=c.deptno
+
+> Give me the complete department information, having total employee more than of 5.
+SELECT d.deptno,d.dname,d.loc,c.total
+FROM Dept d,(SELECT deptno,COUNT(*) total FROM Emp GROUP BY Deptno) c
+WHERE D.deptno=c.deptno AND c.total>5;
+
+> Give me the department details having highest employees.
+SELECT d.deptno,d.dname,d.loc,t.total
+FROM Dept d,
+(SELECT Deptno,COUNT(*) Total FROM Emp GROUP BY Deptno
+HAVING COUNT(*)=(SELECT MAX(COUNT(*)) FROM Emp GROUP BY Deptno)) t
+WHERE d.deptno = t.deptno
+
+> Give me the job details having highest employees.
+
+
+> Give me the job details having lowest employees departement wise.
+SELECT Job,High
+FROM Emp e,
+(SELECT MAX(COUNT(*)) High FROM Emp GROUP BY Job) hi
+GROUP BY Job,High
+HAVING COUNT(*)=High
+
+
+
+> Give the salary percentage paid by the department in the organization.
+SELECT Deptno,SUM(Sal),Total,ROUND((SUM(Sal)/total)*100,2)||'%' Percentage
+FROM  Emp e,(SELECT SUM(Sal) total FROM Emp) t
+GROUP BY Deptno,total
+
+
+> Give the salary percentage of each job in the organization
+> Give the salary percentage of each employee in the organization.
+SELECT Ename,Sal,ROUND(Sal/(SELECT SUM(Sal) FROM Emp)*100,2)||'%'
+FROM Emp
+
+column Total format 99999
+column Total format A10
+
+> Display total employee, total department, total grade.
+
+SELECT
+(SELECT COUNT(*) FROM Emp EmpCount),
+(SELECT COUNT(*) FROM Dept Deptcount),
+(SELECT COUNT(*) FROM Salgrade GradeCount)
+FROM Dual;
+ 
+or
+
+SELECT *
+FROM (SELECT COUNT(*) EmpCount FROM Emp) ec,
+(SELECT COUNT(*) Deptcount FROM Dept) dc,
+(SELECT COUNT(*) GradeCount FROM Salgrade) gc
+
+
+> Find which table having least records among Emp,Dept,Salgrade.
+
+> Find sum of all record of emp,salgrade,dept
+
+SELECT empcount,deptcount,gradecount,
+( empcount+deptcount+gradecount) total
+FROM (SELECT COUNT(*) EmpCount FROM Emp) ec,
+(SELECT COUNT(*) Deptcount FROM Dept) dc,
+(SELECT COUNT(*) GradeCount FROM Salgrade) gc
+
+
+> Display total employee in emp,salagrade,dept. And count sum of all records with minimum record count and maximum record count.
+
+> How many percentage of employee working in the department of the org, along with salary percentage of paid by the department.
+
+CO-RELATED sub query:
+> Give me the details of those employees whose income is more than of average payment of their department without using group by expression.
+
+
+> Give me details of those person whose salary is more than of their manager without using join.
+
+> Found working department without using IS NULL,nvl and join.
+
+
+> Found non working department without using nvl or IS NULL and join.
+
+> Give the name of the person who doesnt controlled by anyone without using nvl or IS NULL.
+
+
+Hierarchical Sub-Query:
+> Give me hierarchacal information of the employee table.
+> Give me the details of the employees who is directly or indirectly working under the king.
+> Give me the details of the employees who is directly or indirectly working under the JONES.
+> Give me the details of the employees who is directly or indirectly working under the blake.
+> Give me the details of the employees who is directly or indirectly working under the clark.
+
+> Give me the details of the employees who is directly or indirectly working under the ford.
+
+> How many employee working under the king(directly/indirectly)
+> How many employee working under the jones(directly/indirectly)
+> Give me the details of the employees who is indirectly working under the king.
+
+> Give me the details of the employees who is indirectly working under the jones.
+ 
+
+> Give me the details of the employees who is indirectly working under the adams.
+
+> Give me the details of the employees who is directly working under the scott.
+
+> How many records selected by the query
+Case1:
+  SELECT COUNT(*)
+  FROM Emp
+  CONNECT BY PRIOR Ename = Mgr
+Case2:
+  SELECT COUNT(*)
+  FROM Emp
+  WHERE Ename='CLARK'
+  CONNECT BY PRIOR Empno=mgr
+Case3:
+  SELECT COUNT(*)
+  FROM Emp
+  WHERE Ename='JONES'
+  CONNECT BY PRIOR Empno=mgr
+Case4:
+  SELECT COUNT(*)
+  FROM Emp
+  WHERE Ename='BLAKE'
+  CONNECT BY PRIOR Empno=mgr
+Case5:
+  SELECT COUNT(*)
+  FROM Emp
+  WHERE Ename='FORD'
+  CONNECT BY PRIOR Empno=mgr
+Case6:
+  SELECT COUNT(*)
+  FROM Emp
+  WHERE Ename='ADAMS'
+  CONNECT BY PRIOR Empno=mgr
+
+How many rows selected?
+Case1:
+SELECT Ename
+FROM Emp
+START WITH Ename='KING'
+CONNECT BY PRIOR Empno = Mgr;
+
+Case2:
+SELECT Ename
+FROM Emp
+START WITH Ename='KING'
+CONNECT BY Empno = PRIOR Mgr;
+
+Case3:
+SELECT Ename
+FROM Emp
+START WITH Ename='KING'
+CONNECT BY PRIOR Empno = PRIOR Mgr
+
+Case4:
+SELECT Ename
+FROM Emp
+START WITH Ename='KING'
+CONNECT BY Empno = Mgr
+
+Compare the given case:
+case1:
+SELECT Ename
+FROM Emp
+START WITH Ename='KING'
+CONNECT BY 1=1
+
+case2:
+SELECT Ename
+FROM Emp
+START WITH Ename='KING'
+CONNECT BY Deptno=Deptno
+
+case3:
+SELECT Ename
+FROM Emp
+START WITH Ename='KING'
+CONNECT BY PRIOR Deptno=Deptno
+
+case4:
+SELECT Ename
+FROM Emp
+START WITH 1=1
+CONNECT BY PRIOR empno=mgr
+
+See the difference
+==================
+case1:
+SELECT Ename
+FROM Emp
+START WITH Ename='SMITH'
+CONNECT BY PRIOR mgr=empno
+
+case2:
+SELECT Ename
+FROM Emp
+START WITH Ename='SMITH'
+CONNECT BY mgr = PRIOR empno
+
+> Give the all parent name of the smith
+> Give the all parent name of the ford
+> Give the all parent name of the jones
+> Give the all parent name of the king
+
+How many row selected?
+case1:
+SELECT Ename
+FROM Emp
+START WITH Ename='KING'
+CONNECT BY PRIOR mgr=empno
+
+case2:
+SELECT Ename
+FROM Emp
+START WITH Ename='JONES'
+CONNECT BY PRIOR mgr=empno
+
+case3:
+SELECT Ename
+FROM Emp
+START WITH Ename='SCOTT'
+CONNECT BY PRIOR mgr=empno
+
+case4: 
+SELECT Ename
+FROM Emp
+START WITH Ename='SMITH'
+CONNECT BY PRIOR mgr=empno
+
+How many rows are displayed?
+case1:
+SELECT Ename
+FROM Emp
+START WITH Ename='JONES'
+CONNECT BY PRIOR empno=mgr AND Job='ANALYST'
+
+case2:
+SELECT Ename
+FROM Emp
+START WITH Ename='JONES'
+CONNECT BY PRIOR empno=mgr AND Job='CLERK'
+
+case3:
+SELECT Ename
+FROM Emp
+START WITH Ename='KING'
+CONNECT BY PRIOR empno=mgr AND (Job='MANAGER' OR Job='SALESMAN')
+
+
+> Give me the details of those employees who is working under the highest paid employee.
+
+> Give me the details of the employees who is working under the manager of department 20 either directly or indirectly.
+
+> Who is supervisor of smith.
+> Who is root level supervisor of smith.
+> Whos is the top level manager of smith,allen,blake.
+
+
+
+
+
+
+
+
+
+
+
+
+
